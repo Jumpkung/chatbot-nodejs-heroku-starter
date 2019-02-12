@@ -77,7 +77,7 @@ function hanndleEvent(event) {
         }
       }
 
-    let clomun = [
+    let column = [
       {
         thumbnailImageUrl: "",
         imageBackgroundColor: "#FFFFFF",
@@ -116,11 +116,11 @@ function hanndleEvent(event) {
         res.on('end', function(){
             var fbResponse = JSON.parse(body);
             fbResponse.forEach((element, index) => {
-              clomun.thumbnailImageUrl = element.aqi.icon;
-              clomun.title = element.nameTH;
-              clomun.text = element.aqi.aqi;
+              column.thumbnailImageUrl = element.aqi.icon;
+              column.title = element.nameTH;
+              column.text = element.aqi.aqi;
 
-              msg.template.columns.push(clomun);
+              msg.template.columns.push(column);
               console.log(msg);
             });
         });
@@ -128,8 +128,10 @@ function hanndleEvent(event) {
         console.log("Got an error: ", e);
     });
 
-    console.log(event.message.latitude);
-    console.log(event.message.longitude);
+    client.pushMessage(event.source.userId, msg)
+
+    // console.log(event.message.latitude);
+    // console.log(event.message.longitude);
   }
   else if (event.message.type == 'text' && event.message.text == 'menu') {
     let msg = {
